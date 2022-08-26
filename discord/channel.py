@@ -1582,7 +1582,15 @@ class VoiceChannel(discord.abc.Messageable, VocalGuildChannel):
             # the payload will always be the proper channel payload
             return self.__class__(state=self._state, guild=self.guild, data=payload)  # type: ignore
 
-    async def create_activity_invite(self, activity: Union[EmbeddedActivity, int], **kwargs) -> Invite:
+    async def create_activity_invite(
+        self, 
+        activity: Union[EmbeddedActivity, int], 
+        max_age: int = 0,
+        max_uses: int = 0,
+        temporary: bool = False,
+        unique: bool = False,
+        reason: Optional[str] = None,
+    ) -> Invite:
         """|coro|
 
         A shortcut method that creates an instant activity invite.
@@ -1633,7 +1641,11 @@ class VoiceChannel(discord.abc.Messageable, VocalGuildChannel):
         return await self.create_invite(
             target_type=InviteTarget.embedded_application,
             target_application_id=activity,
-            **kwargs,
+            max_age=max_age,
+            max_uses=max_uses,
+            temporary=temporary,
+            unique=unique,
+            reason=reason,
         )
 
 
